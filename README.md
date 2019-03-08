@@ -3,6 +3,13 @@
 This sample demonstrates a common pattern of blob to event grid to python functions architecture. This architecture represents a common Machine learning pipeline where
 we see raw data uploaded to a blob which fires an event into Azure Event Grid, that is connected to a Python function, which uses pandas to clean data and  other libraries to preprocess data for ML training/inference purposes.
 
+# Usage
+
+- Add your own cleaning or preprocessing code that uses pandas into HttpTrigger1 and 2 accordingly.
+- Provide unique names in respective ARM template parameters.json files and follow steps below to deploy
+
+Note: Since this involves a webhook with Event Grid that requires the func core tools to deploy the function app, we cannot write a single ARM template to achieve the complete deployment. Scripts (Powershell/Bash) can be used to automate the Deployment Steps below.
+
 # Azure Resources
 
 - Azure Function V2 on Linux Consumption Plan with two HttpTriggers
@@ -15,9 +22,8 @@ we see raw data uploaded to a blob which fires an event into Azure Event Grid, t
 - Install Azure CLI Latest
 - Install Functions Core Tools and other prerequisites for functions to run
 
-## Steps (Note: TODO, convert steps into a script)
+## Deployment Steps
 - az login
-- Provide names for params in respective parameters.json files provided here. If the name is not unique deployments can fail (TODO: autogenerate names to avoid conflicts)
 - Create Resource group in Azure
 - az group deployment create -g `resource_group_name` --template-file azure-deploy-linux-app-plan.json --parameters @azuredeploy.parameters.json
 - Deploy your function app using func azure functionapp publish `functionappname` --build-native-deps
